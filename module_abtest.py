@@ -31,8 +31,8 @@ class ABTest:
         """
         Show distribution of a feature across groups.
         """
-        balance_table = pd.crosstab(self.df['group'], self.df[feature], normalize='index')
-        display(balance_table)
+        balance_table = pd.crosstab(self.df['arm'], self.df[feature], normalize='index')
+        print(balance_table)
 
     def are_we_underpowered(self, actual, required):
         difference = actual - required
