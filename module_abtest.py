@@ -67,6 +67,28 @@ class ABTest:
             f"Experiment is {self.are_we_underpowered(actual_n, required_n)}"
         )
 
+    def ab_ttest(self, doprint=True, two_sided=False):
+
+        control = self.df[self.df[self.group_var] == 'control'][self.kpi].dropna()
+        treatment = self.df[self.df[self.group_var] == 'treatment'][self.kpi].dropna()
+
+        #Welch t-test statistic
+        t_stat, _ = stats.ttest_ind(treatment, control, equal_var=False)
+
+        df = len(control) + len(treatment) - 2
+
+        if two_sided:
+            p_value = 2 * (1 - stats.t.cdf(abs(t_stat), df))
+        else:
+            p_value = 1 - stats.t.cdf(t_stat, df)
+
+        if doprint:
+            print("t-stat:", t_stat)
+            print("p-value:", p_value)
+
+        else:
+            return treatment, control
+
     def welch_t_test(self, doprint=False):
         """
         Perform one-sided Welch's t-test on a binary KPI between control and treatment.
