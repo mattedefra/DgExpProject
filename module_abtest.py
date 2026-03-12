@@ -24,6 +24,11 @@ class ABTest:
         self.group_var = kwargs.get('groupvar', 'arm')
 
     def append_data(self, new_df):
+        """
+        Append new batch of data to existing dataframe.
+        The original plan was to receive new batches of data periodically, but alas we ended up using simulated data
+        and this method will not be used.
+        """
         self.iteration += 1
         self.df = pd.concat([self.df, new_df], ignore_index=True)
 
