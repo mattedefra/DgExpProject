@@ -64,3 +64,5 @@ data/
 
 # Logs
 *.log
+
+.idea
