@@ -73,7 +73,11 @@ class ABTest:
         )
 
     def ab_ttest(self, doprint=True, two_sided=False):
-
+        """
+        Perform one-sided Welch's t-test on a binary KPI between control and treatment.
+        Always tests H1: treatment =/= control.
+        Prints t-statistic and p-value.
+        """
         control = self.df[self.df[self.group_var] == 'control'][self.kpi].dropna()
         treatment = self.df[self.df[self.group_var] == 'treatment'][self.kpi].dropna()
 
@@ -91,8 +95,6 @@ class ABTest:
             print("t-stat:", t_stat)
             print("p-value:", p_value)
 
-        else:
-            return treatment, control
 
     def welch_t_test(self, doprint=False):
         """
